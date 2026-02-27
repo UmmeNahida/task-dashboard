@@ -109,8 +109,9 @@ const Home = () => {
               className="gap-2"
             >
               <LogOut className="w-4 h-4" />
-              Logout
+              logout
             </Button>
+            
           </div>
         </div>
       </header>
