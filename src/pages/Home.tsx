@@ -9,6 +9,8 @@ import {
   Package,
   LogOut,
 } from "lucide-react";
+import ProjectAnalytics from "@/components/dashboard/ProjectAnalytics";
+import ProjectProgress from "@/components/dashboard/ProjectProgress";
 
 interface Overview {
   totalUsers: number;
@@ -111,7 +113,6 @@ const Home = () => {
               <LogOut className="w-4 h-4" />
               logout
             </Button>
-            
           </div>
         </div>
       </header>
@@ -177,7 +178,13 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Two Column Layout */}
+        {/* Project Analytics and Progress */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <ProjectAnalytics analytics={data.analytics} />
+          <ProjectProgress analytics={data.analytics} />
+        </div>
+
+        {/* Users and Products */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           {/* Recent Users */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100">
