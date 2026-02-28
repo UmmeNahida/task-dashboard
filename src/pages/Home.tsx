@@ -5,7 +5,6 @@ import {
   TrendingUp,
   DollarSign,
   Activity,
-  BarChart3,
   Package,
   LogOut,
 } from "lucide-react";
@@ -179,59 +178,24 @@ const Home = () => {
         </div>
 
         {/* Project Analytics and Progress */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <ProjectAnalytics analytics={data.analytics} />
-          <ProjectProgress analytics={data.analytics} />
-        </div>
-
-        {/* Users and Products */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Recent Users */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-            <div className="p-6 border-b border-gray-100">
-              <div className="flex items-center gap-2">
-                <Users className="w-5 h-5 text-gray-600" />
-                <h2 className="text-lg font-semibold text-gray-900">
-                  Recent Users
-                </h2>
-              </div>
-            </div>
-            <div className="p-6">
-              <div className="space-y-4">
-                {data.users.map((user) => (
-                  <div
-                    key={user.id}
-                    className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
-                        {user.name.charAt(0)}
-                      </div>
-                      <div>
-                        <p className="font-medium text-gray-900">
-                          {user.name}
-                        </p>
-                        <p className="text-sm text-gray-500">
-                          {user.email}
-                        </p>
-                      </div>
-                    </div>
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        user.status === "active"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-gray-100 text-gray-700"
-                      }`}
-                    >
-                      {user.status}
-                    </span>
-                  </div>
-                ))}
-              </div>
+        <div className="grid grid-cols-12 gap-6 mb-8">
+          {/* <!-- ===== Middle Left Section ===== --> */}
+          <div className="col-span-5 bg-white p-6 rounded-2xl shadow">
+            <ProjectAnalytics analytics={data.analytics} />
+          </div>
+          <div className="col-span-3 bg-white p-6 rounded-2xl shadow">
+            <h3 className="text-lg font-semibold mb-4">
+              redudency
+            </h3>
+            <div className="h-40 bg-gray-100 rounded-xl flex items-center justify-center">
+              Chart Area
             </div>
           </div>
 
-          {/* Products */}
+            {/* <!-- ===== Right Sidebar ===== --> */}
+    <div className="col-span-4 row-span-8 space-y-6">
+      
+       {/* Products */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100">
             <div className="p-6 border-b border-gray-100">
               <div className="flex items-center gap-2">
@@ -269,70 +233,61 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Analytics Table */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-          <div className="p-6 border-b border-gray-100">
-            <div className="flex items-center gap-2">
-              <BarChart3 className="w-5 h-5 text-gray-600" />
-              <h2 className="text-lg font-semibold text-gray-900">
-                Analytics Overview
-              </h2>
+      <div className="row-span-4 bg-green-700 text-white p-6 rounded-2xl shadow">
+        <h3 className="text-lg">Time Tracker</h3>
+        <p className="text-3xl font-bold mt-2">01:24:08</p>
+      </div>
+
+    </div>
+
+     {/* Recent Users */}
+          <div className="col-span-4 bg-white rounded-xl shadow-sm border border-gray-100">
+            <div className="p-6 border-b border-gray-100">
+              <div className="flex items-center gap-2">
+                <Users className="w-5 h-5 text-gray-600" />
+                <h2 className="text-lg font-semibold text-gray-900">
+                  Recent Users
+                </h2>
+              </div>
+            </div>
+            <div className="p-6">
+              <div className="space-y-4">
+                {data.users.slice(0,3).map((user) => (
+                  <div
+                    key={user.id}
+                    className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
+                        {user.name.charAt(0)}
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">
+                          {user.name}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          {user.email}
+                        </p>
+                      </div>
+                    </div>
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-medium ${
+                        user.status === "active"
+                          ? "bg-green-100 text-green-700"
+                          : "bg-gray-100 text-gray-700"
+                      }`}
+                    >
+                      {user.status}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-50 border-b border-gray-100">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Date
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Views
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Clicks
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Conversions
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Rate
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {data.analytics.map((item, index) => (
-                  <tr
-                    key={index}
-                    className="hover:bg-gray-50 transition-colors"
-                  >
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {new Date(item.date).toLocaleDateString()}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.views.toLocaleString()}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.clicks.toLocaleString()}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.conversions}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
-                        {(
-                          (item.conversions / item.clicks) *
-                          100
-                        ).toFixed(1)}
-                        %
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          
+          <div className="col-span-4">
+            <ProjectProgress analytics={data.analytics} />
           </div>
         </div>
       </main>
