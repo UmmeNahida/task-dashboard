@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import {
   Users,
   TrendingUp,
   DollarSign,
   Activity,
   Package,
-  LogOut,
 } from "lucide-react";
 import ProjectAnalytics from "@/components/dashboard/ProjectAnalytics";
 import ProjectProgress from "@/components/dashboard/ProjectProgress";
+import TimeTracker from "@/components/dashboard/TimeTracker";
+import ReminderCard from "@/components/dashboard/ReminderCard";
+import DashboardLayout from "@/components/dashboard/DashboardLayout";
 
 interface Overview {
   totalUsers: number;
@@ -70,54 +71,40 @@ const Home = () => {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    window.location.href = "/login";
-  };
-
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
+      <DashboardLayout>
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
+        </div>
+      </DashboardLayout>
     );
   }
 
   if (!data) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50">
-        <p className="text-gray-600">Failed to load dashboard data</p>
-      </div>
+      <DashboardLayout>
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <p className="text-gray-600">
+            Failed to load dashboard data
+          </p>
+        </div>
+      </DashboardLayout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg"></div>
-              <h1 className="text-xl font-bold text-gray-900">
-                Task Dashboard
-              </h1>
-            </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleLogout}
-              className="gap-2"
-            >
-              <LogOut className="w-4 h-4" />
-              logout
-            </Button>
-          </div>
+    <DashboardLayout>
+      <div>
+        {/* Page Title */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            Dashboard
+          </h1>
+          <p className="text-gray-600">
+            Plan, prioritize, and accomplish your tasks with ease.
+          </p>
         </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Overview Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
@@ -183,65 +170,57 @@ const Home = () => {
           <div className="col-span-5 bg-white p-6 rounded-2xl shadow">
             <ProjectAnalytics analytics={data.analytics} />
           </div>
-          <div className="col-span-3 bg-white p-6 rounded-2xl shadow">
-            <h3 className="text-lg font-semibold mb-4">
-              redudency
-            </h3>
-            <div className="h-40 bg-gray-100 rounded-xl flex items-center justify-center">
-              Chart Area
+          <div className="col-span-3 bg-white p-6 rounded-2xl shadow flex items-center justify-center">
+            <ReminderCard></ReminderCard>
+          </div>
+
+          {/* <!-- ===== Right Sidebar ===== --> */}
+          <div className="col-span-4 row-span-8 space-y-6">
+            {/* Products */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+              <div className="p-6 border-b border-gray-100">
+                <div className="flex items-center gap-2">
+                  <Package className="w-5 h-5 text-gray-600" />
+                  <h2 className="text-lg font-semibold text-gray-900">
+                    Products
+                  </h2>
+                </div>
+              </div>
+              <div className="p-6">
+                <div className="space-y-4">
+                  {data.products.map((product) => (
+                    <div
+                      key={product.id}
+                      className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                    >
+                      <div>
+                        <p className="font-medium text-gray-900">
+                          {product.name}
+                        </p>
+                        <p className="text-sm text-gray-500 capitalize">
+                          {product.category}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-semibold text-gray-900">
+                          ${product.price}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          {product.sales} sales
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="row-span-1 bg-green-700 text-white p-6 rounded-2xl shadow">
+              <TimeTracker></TimeTracker>
             </div>
           </div>
 
-            {/* <!-- ===== Right Sidebar ===== --> */}
-    <div className="col-span-4 row-span-8 space-y-6">
-      
-       {/* Products */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-            <div className="p-6 border-b border-gray-100">
-              <div className="flex items-center gap-2">
-                <Package className="w-5 h-5 text-gray-600" />
-                <h2 className="text-lg font-semibold text-gray-900">
-                  Products
-                </h2>
-              </div>
-            </div>
-            <div className="p-6">
-              <div className="space-y-4">
-                {data.products.map((product) => (
-                  <div
-                    key={product.id}
-                    className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                  >
-                    <div>
-                      <p className="font-medium text-gray-900">
-                        {product.name}
-                      </p>
-                      <p className="text-sm text-gray-500 capitalize">
-                        {product.category}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-semibold text-gray-900">
-                        ${product.price}
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        {product.sales} sales
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-      <div className="row-span-4 bg-green-700 text-white p-6 rounded-2xl shadow">
-        <h3 className="text-lg">Time Tracker</h3>
-        <p className="text-3xl font-bold mt-2">01:24:08</p>
-      </div>
-
-    </div>
-
-     {/* Recent Users */}
+          {/* Recent Users */}
           <div className="col-span-4 bg-white rounded-xl shadow-sm border border-gray-100">
             <div className="p-6 border-b border-gray-100">
               <div className="flex items-center gap-2">
@@ -253,13 +232,13 @@ const Home = () => {
             </div>
             <div className="p-6">
               <div className="space-y-4">
-                {data.users.slice(0,3).map((user) => (
+                {data.users.slice(0, 3).map((user) => (
                   <div
                     key={user.id}
                     className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
+                      <div className="w-10 h-10 bg-linear-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
                         {user.name.charAt(0)}
                       </div>
                       <div>
@@ -285,13 +264,13 @@ const Home = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="col-span-4">
             <ProjectProgress analytics={data.analytics} />
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </DashboardLayout>
   );
 };
 
